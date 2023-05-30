@@ -35,7 +35,6 @@ function App() {
           {/*<div className="header-wrapper"> </div>*/}
           <div className="description">DESCRIPTION</div>
         </div>
-        <img src="/assets/desktop/bg-image-daytime.jpg" alt="daytime" className="image" />
       </section>
     </main>
   )
