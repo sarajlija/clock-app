@@ -41,16 +41,16 @@ header {
 }
 .description {
   width: 100%;
-  display: flex;
+  position: relative;
 
-  transform: translateY(400);
+  transform: translateY(-90px);
   transition: all 0.4s ease-in-out;
   background-color: white;
   color: black;
 }
-/*.description.open-description {
-  transform: translateY(450px);
-}*/
+.open-description {
+  transform: translateY(80px);
+}
 .description .left-description {
   width: 50%;
   padding: 74px 165px;

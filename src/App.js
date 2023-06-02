@@ -44,7 +44,7 @@ function App() {
       </header>{" "}
       <div
         className={` d-flex       
-        ${!description ? "description" : ".description.open-description"}`}
+        ${!description ? "description" : "open-description"}`}
       >
         <div className="left-description">
           <p>current time zone</p>
