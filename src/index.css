@@ -4,11 +4,16 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
-  height: 100%;
+  height: 100vh;
+  background-image: url("/public/assets/desktop/bg-image-daytime.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  /*filter: brightness(0.7);*/
 }
 /*
 section {
-}*/
+}
 .image {
   position: absolute;
   z-index: -1;
@@ -16,16 +21,18 @@ section {
   height: 100%;
   object-fit: cover;
   width: 100%;
-  filter: brightness(0.7);
-}
+}*/
 main {
   position: relative;
-  height: 100vh;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-.header {
+header {
+  overflow: hidden;
   height: 100%;
-  position: absolute;
+  position: relative;
+}
+.wrapper-title {
   color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -33,7 +40,33 @@ main {
   padding: 56px 165px 98px 165px;
 }
 .description {
-  display: none;
+  width: 100%;
+  display: flex;
+
+  transform: translateY(400);
+  transition: all 0.4s ease-in-out;
+  background-color: white;
+  color: black;
+}
+/*.description.open-description {
+  transform: translateY(450px);
+}*/
+.description .left-description {
+  width: 50%;
+  padding: 74px 165px;
+}
+.description .right-description {
+  width: 50%;
+  padding: 74px 94px;
+}
+
+.right-description h2 {
+  font-size: 56px;
+  font-weight: 700;
+}
+.left-description h2 {
+  font-size: 56px;
+  font-weight: 700;
 }
 /*.header-wrapper {
   display: flex;
