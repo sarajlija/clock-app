@@ -5,59 +5,67 @@ body {
   padding: 0;
   font-family: "Inter", sans-serif;
   height: 100vh;
-  background-image: url("/public/assets/desktop/bg-image-daytime.jpg");
+  /*background-image: url("/public/assets/desktop/bg-image-daytime.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+
+ */
   overflow: hidden;
-  /*filter: brightness(0.7);*/
 }
 /*
 section {
-}
+}*/
 .image {
   position: absolute;
+  top: 0;
   z-index: -1;
   max-width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   width: 100%;
-}*/
+  filter: brightness(0.6);
+}
 main {
   position: relative;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 header {
-  overflow: hidden;
   height: 100%;
-  position: relative;
 }
 .wrapper-title {
   color: #ffffff;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  padding: 56px 165px 98px 165px;
+  padding: 36px 165px 96px 165px;
+}
+.current-description {
+  margin-bottom: 0;
 }
 .description {
   width: 100%;
+  display: flex;
   position: relative;
-
   transform: translateY(-90px);
   transition: all 0.4s ease-in-out;
   background-color: white;
   color: black;
 }
 .open-description {
-  transform: translateY(80px);
+  transform: translateY(-80px);
+}
+.close-description {
+  transform: translateY(280px);
 }
 .description .left-description {
   width: 50%;
-  padding: 74px 165px;
+  padding: 57px 165px;
 }
 .description .right-description {
   width: 50%;
-  padding: 74px 94px;
+  padding: 57px 94px;
 }
 
 .right-description h2 {
@@ -84,6 +92,8 @@ header {
 .header-quote {
   width: 50%;
   display: flex;
+
+  align-items: flex-start;
 }
 .quote-wrapper {
   font-style: normal;
@@ -93,12 +103,17 @@ header {
 }
 .header-title h1 {
   font-size: 200px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 .span-bst {
   font-size: 40px;
   font-weight: 400;
 }
-
+.btn-refresh {
+  border: none;
+  background-color: transparent;
+}
 .btn-more {
   display: flex;
   align-items: flex-end;
