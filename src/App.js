@@ -1,14 +1,10 @@
-
-
 import { useState, useEffect } from "react"
-import useGeolocation from "react-navigator-geolocation";
+import moment from "moment"
 import axios from "axios"
 
 function App() {
   const [quote, setQuote] = useState("The science of operations, as derived from mathematics more especially, is a science of itself, and has its own abstract truth and value.")
   const [autor, setAutor] = useState("Ada Lovace")
-  
- 
 
   /*QUOTES*/
   const url = "https://quotes15.p.rapidapi.com/quotes/random/"
@@ -33,27 +29,26 @@ function App() {
       console.error(error)
     }
   }
-/*WORLTIME*/
-const [currentTime, setCurrentTime]=useState(null)
-const [timeZone, setTimeZone]=useState(null)
-useEffect(()=>{
-  const fetchTime =async ()=>{
-    try {
-      const response = await 
-      axios.get("http://worldtimeapi.org/api/ip")
-      const{datetime, timezone}  = response.data
-      setCurrentTime(datetime)
-     setTimeZone(timezone)} catch(error) {
-      console.log(error)
-     }
- 
-  }
-  fetchTime()
-},[])
-console.log(timeZone)
-console.log(currentTime)
-
-/*GEOLOCATION
+  /*WORLTIME
+  const [currentTime, setCurrentTime] = useState(null)
+  const [timeZone, setTimeZone] = useState(null)
+  useEffect(() => {
+    const fetchTime = async () => {
+      try {
+        const response = await axios.get("http://worldtimeapi.org/api/ip")
+        const { datetime, timezone } = response.data
+        setCurrentTime(datetime)
+        setTimeZone(timezone)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchTime()
+  }, [])
+  console.log(timeZone)
+  console.log(currentTime)
+*/
+  /*GEOLOCATION
 const [locationData, setLocationData] = useState(null)
 const options2 = {
   method: 'GET',
@@ -99,8 +94,7 @@ useEffect(() => {
 }, []);
 console.log(locationData)*/
 
-
-/*HIDE QUOTE*/
+  /*HIDE QUOTE*/
   const [description, setDescription] = useState(false)
   const handleClickDescription = () => {
     setDescription(!description)
@@ -121,44 +115,43 @@ console.log(locationData)*/
     fetchData()
   }, [])*/
   console.log(quote)
-  const [location, setLocation] = useState(null);
-  const [weather, setWeather] = useState(null);
+  /*
+  const [location, setLocation] = useState(null)
+  const [weather, setWeather] = useState(null)
 
   function handleLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
-  
+      navigator.geolocation.getCurrentPosition(success, error)
     } else {
-      console.log("Geolocation not supported");
+      console.log("Geolocation not supported")
     }
   }
   useEffect(() => {
     handleLocation()
-  }, []);
-
+  }, [])
 
   function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    setLocation({ latitude, longitude });
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setLocation({ latitude, longitude })
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`)
 
     // Make API call to OpenWeatherMap
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=API_KEY`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=cb6a13d1a17e74c78d0fac8bacf21fa7`)
       .then(response => response.json())
       .then(data => {
-        setWeather(data);
-        console.log(data);
-       
+        setWeather(data)
+        console.log(data)
       })
-      .catch(error => console.log(error));
-  }
- console.log(weather)
-  function error() {
-    console.log("Unable to retrieve your location");
+      .catch(error => console.log(error))
   }
 
-/*
+  function error() {
+    console.log("Unable to retrieve your location")
+  }
+  console.log(weather)
+  console.log(location)
+  /*
   useEffect(() => {
  
     if (navigator.geolocation) {
@@ -180,6 +173,7 @@ console.log(locationData)*/
 
 
   useEffect(() => {
+    
     if (latitude && longitude) {
       axios
         .get(
@@ -219,9 +213,13 @@ console.log(locationData)*/
                 GOOD MORNING, IT’S CURRENTLY
               </p>
               <h1 className="current-time">
-               {currentTime.slice(11,16)}<span className="span-bst">BST</span>
+                {moment().format().slice(11, 16)}
+                <span className="span-bst">BST</span>
               </h1>
-              <h3>IN {timeZone.slice(7,18)}<span className="ms-3">{weather.sys.country}</span></h3>
+              <h3>
+                IN
+                <span className="ms-3">{}</span>
+              </h3>
             </div>
             <div className="btn-more">
               <button className="btn btn-light" onClick={handleClickDescription}>

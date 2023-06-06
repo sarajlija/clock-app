@@ -4,13 +4,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
- 
+
   /*background-image: url("/public/assets/desktop/bg-image-daytime.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 
  */
-  
 }
 /*
 section {
@@ -20,7 +19,7 @@ section {
   top: 0;
   z-index: -1;
   max-width: 100%;
-  height:  100vh;
+  height: 100vh;
   object-fit: cover;
   width: 100%;
   filter: brightness(0.6);
@@ -30,7 +29,7 @@ main {
   height: 100vh;
   display: flex;
   flex-direction: column;
- overflow: hidden;
+  overflow: hidden;
   z-index: 2;
 }
 header {
@@ -90,13 +89,12 @@ header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-
 }
 .header-quote {
   width: 50%;
   display: flex;
-  align-items: flex-start; 
-   margin-bottom: 14rem;
+  align-items: flex-start;
+  margin-bottom: 10rem;
 }
 .quote-wrapper {
   font-style: normal;
