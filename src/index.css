@@ -4,13 +4,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
-  height: 100vh;
+ 
   /*background-image: url("/public/assets/desktop/bg-image-daytime.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 
  */
-  overflow: hidden;
+  
 }
 /*
 section {
@@ -20,15 +20,17 @@ section {
   top: 0;
   z-index: -1;
   max-width: 100%;
-  height: auto;
+  height:  100vh;
   object-fit: cover;
   width: 100%;
   filter: brightness(0.6);
 }
 main {
   position: relative;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+ overflow: hidden;
   z-index: 2;
 }
 header {
@@ -39,7 +41,7 @@ header {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  padding: 36px 165px 96px 165px;
+  padding: 96px 165px 96px 165px;
 }
 .current-description {
   margin-bottom: 0;
@@ -48,13 +50,13 @@ header {
   width: 100%;
   display: flex;
   position: relative;
-  transform: translateY(-90px);
+  transform: translateY(40px);
   transition: all 0.4s ease-in-out;
   background-color: white;
   color: black;
 }
 .open-description {
-  transform: translateY(-80px);
+  transform: translateY(40px);
 }
 .close-description {
   transform: translateY(280px);
@@ -88,12 +90,13 @@ header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
 }
 .header-quote {
   width: 50%;
   display: flex;
-
-  align-items: flex-start;
+  align-items: flex-start; 
+   margin-bottom: 14rem;
 }
 .quote-wrapper {
   font-style: normal;
