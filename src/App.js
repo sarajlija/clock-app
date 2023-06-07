@@ -77,18 +77,17 @@ function App() {
         const response = await axios.get("http://worldtimeapi.org/api/ip")
 
         console.log(response)
-        if (response === undefined) {
-          let arr = response || []
+        /*if (response === undefined) {
+          /* let arr = response || []
           arr = await response.json()
           console.log(arr)
           setData(arr.data.datetime.slice(11, 16))
           setTimeZone(arr.data.timezone)
           setAbbreviation(arr.data.abbreviation)
-        } else {
-          setData(response.data.datetime.slice(11, 16))
-          setTimeZone(response.data.timezone)
-          setAbbreviation(response.data.abbreviation)
-        }
+        } else {*/
+        setData(response.data.datetime.slice(11, 16))
+        setTimeZone(response.data.timezone)
+        setAbbreviation(response.data.abbreviation)
       } catch (err) {
         setError(err.message)
         setData(null)
@@ -271,7 +270,7 @@ console.log(locationData)*/
                   <span className="span-bst">{abbreviation}</span>
                 </h1>
               )}
-              {loading && <p className="fs-1">Loading....</p>}
+              {loading && <p className="fs-3">Loading....</p>}
               <h3>
                 IN <span className="ms-3">{timeZone}</span>
               </h3>
