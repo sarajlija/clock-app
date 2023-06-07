@@ -1,7 +1,7 @@
 
 
 import { useState, useEffect } from "react"
-import useGeolocation from "react-navigator-geolocation";
+
 import axios from "axios"
 
 function App() {
@@ -36,22 +36,56 @@ function App() {
 /*WORLTIME*/
 const [currentTime, setCurrentTime]=useState(null)
 const [timeZone, setTimeZone]=useState(null)
-useEffect(()=>{
-  const fetchTime =async ()=>{
-    try {
-      const response = await 
-      axios.get("http://worldtimeapi.org/api/ip")
-      const{datetime, timezone}  = response.data
-      setCurrentTime(datetime)
-     setTimeZone(timezone)} catch(error) {
-      console.log(error)
-     }
- 
+
+const urlTime = 'https://world-time2.p.rapidapi.com/ip';
+const optionsTime = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '02df9e7ffbmshcce54fcdba3ad4bp1c0149jsn5afc4d45cc52',
+		'X-RapidAPI-Host': 'world-time2.p.rapidapi.com'
+	}
+};
+const fetchTime = async ()=>{
+try {
+	const response = await fetch(urlTime, optionsTime);
+	const result= await response.json()
+	console.log(result);
+  if(result===undefined){
+    let arr = result || [];
+    arr = await response.json();
+    console.log(arr)
+    setCurrentTime(arr.datetime.slice(11,16))
+  } else {
+    setCurrentTime(result.datetime.slice(11,16))
   }
-  fetchTime()
-},[])
-console.log(timeZone)
-console.log(currentTime)
+
+ 
+} catch (error) {
+	console.error(error);
+}
+
+
+}
+  useEffect(() => {   
+    fetchTime();
+  }, []);
+/*
+
+  const fetchTime = async ()=>{
+    const response = await fetch("http://worldtimeapi.org/api/ip/")
+    const dataTime = await response.json()
+   const {datetime, timezone} =dataTime
+    console.log(dataTime)
+    setCurrentTime(datetime)
+    setTimeZone(timezone)
+   
+  }
+ 
+
+  
+*/
+
+/*console.log(currentTime)*/
 
 /*GEOLOCATION
 const [locationData, setLocationData] = useState(null)
@@ -108,6 +142,7 @@ console.log(locationData)*/
   const handleClickQuote = () => {
     fetchData()
   }
+
   /*useEffect(() => {
     const getDataAfterTimeOut = setInterval(() => {
      
@@ -119,7 +154,7 @@ console.log(locationData)*/
 
   /*useEffect(() => {
     fetchData()
-  }, [])*/
+  }, [])
   console.log(quote)
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
@@ -195,6 +230,7 @@ console.log(locationData)*/
   }, [latitude, longitude]);
 
 */
+  
   return (
     <main>
       <header>
@@ -219,9 +255,9 @@ console.log(locationData)*/
                 GOOD MORNING, IT’S CURRENTLY
               </p>
               <h1 className="current-time">
-               {currentTime.slice(11,16)}<span className="span-bst">BST</span>
+               {currentTime}<span className="span-bst">{}</span>
               </h1>
-              <h3>IN {timeZone.slice(7,18)}<span className="ms-3">{weather.sys.country}</span></h3>
+              <h3>IN <span className="ms-3">{timeZone}</span></h3>
             </div>
             <div className="btn-more">
               <button className="btn btn-light" onClick={handleClickDescription}>
