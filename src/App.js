@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import useGeolocation from "react-navigator-geolocation";
+import useGeolocation from "react-navigator-geolocation"
 import axios from "axios"
 
 function App() {
@@ -29,47 +29,70 @@ function App() {
       console.error(error)
     }
   }
-/*WORLTIME*/
+  /*WORLTIME
 
-const [currentTime, setCurrentTime]=useState(null)
-const [timeZone, setTimeZone]=useState(null)
+  const [currentTime, setCurrentTime] = useState(null)
+  const [timeZone, setTimeZone] = useState(null)
 
-const urlTime = 'https://world-time2.p.rapidapi.com/ip';
-const optionsTime = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '02df9e7ffbmshcce54fcdba3ad4bp1c0149jsn5afc4d45cc52',
-		'X-RapidAPI-Host': 'world-time2.p.rapidapi.com'
-	}
-};
-const fetchTime = async ()=>{
-try {
-	const response = await fetch(urlTime, optionsTime);
-	const result= await response.json()
-
-  if(result===undefined){
-    let arr = result || [];
-    arr = await response.json();
-    console.log(arr)
-    setCurrentTime(arr.datetime.slice(11,16))
-  } else {
-    setCurrentTime(result.datetime.slice(11,16))
-    	console.log(result);
+  const urlTime = "https://world-time2.p.rapidapi.com/ip"
+  const optionsTime = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "02df9e7ffbmshcce54fcdba3ad4bp1c0149jsn5afc4d45cc52",
+      "X-RapidAPI-Host": "world-time2.p.rapidapi.com"
+    }
   }
+  const fetchTime = async () => {
+    try {
+      const response = await fetch(urlTime, optionsTime)
+      const result = await response.json()
 
- 
-} catch (error) {
-	console.error(error);
-}
+      if (result === undefined) {
+        let arr = result || []
+        arr = await response.json()
+        console.log(arr)
+        setCurrentTime(arr.datetime.slice(11, 16))
+      } else {
+        setCurrentTime(result.datetime.slice(11, 16))
+        console.log(result)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  useEffect(() => {
+    fetchTime()
+  }, [])
+*/
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("http://worldtimeapi.org/api/ip")
 
-}
-  useEffect(() => {   
-    fetchTime();
-  }, []);
-
-
-/*GEOLOCATION
+        console.log(response)
+        if (response === undefined) {
+          let arr = response || []
+          arr = await response.json()
+          console.log(arr)
+          setData(arr.data.datetime.slice(11, 16))
+        } else {
+          setData(response.data.datetime.slice(11, 16))
+        }
+      } catch (err) {
+        setError(err.message)
+        setData(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+    getData()
+  }, [loading])
+  //const { datetime } = data
+  /*GEOLOCATION
 const [locationData, setLocationData] = useState(null)
 const options2 = {
   method: 'GET',
@@ -211,7 +234,7 @@ console.log(locationData)*/
   }, [latitude, longitude]);
 
 */
-  
+
   return (
     <main>
       <header>
@@ -236,9 +259,12 @@ console.log(locationData)*/
                 GOOD MORNING, IT’S CURRENTLY
               </p>
               <h1 className="current-time">
-               {currentTime}<span className="span-bst">BST</span>
+                {data}
+                <span className="span-bst">BST</span>
               </h1>
-              <h3>IN <span className="ms-3">{}</span></h3>
+              <h3>
+                IN <span className="ms-3">{}</span>
+              </h3>
             </div>
             <div className="btn-more">
               <button className="btn btn-light" onClick={handleClickDescription}>
