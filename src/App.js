@@ -44,6 +44,7 @@ function App() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
+    
     const getData = async () => {
       try {
         const response = await axios.get("http://worldtimeapi.org/api/ip")
@@ -67,6 +68,12 @@ function App() {
     getData()
   }, [loading])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+     fetchData()
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [quote, autor]);
   /*GEOLOCATION
   const [locationData, setLocationData] = useState(null)
   const [countryCode, setCountryCode] =useState(null)
@@ -108,7 +115,7 @@ console.log(countryCode)
           {!description && (
             <div className="header-quote">
               <div className="quote-wrapper">
-                <p className="quote">{quote}</p>
+                <p className="quote">"{quote}"</p>
                 <small>{autor}</small>
               </div>
               <button className="btn-refresh" onClick={handleClickQuote}>
@@ -119,7 +126,7 @@ console.log(countryCode)
           <div className="header-title">
             <div className="current">
               <p className="current-description">
-                <span>
+                <span className="me-2">
                   <img src="/assets/desktop/icon-sun.svg" alt="sun" />
                 </span>
                 GOOD MORNING, IT’S CURRENTLY
@@ -131,7 +138,7 @@ console.log(countryCode)
                 </h1>
               )}
               {loading && <p className="fs-3">Loading....</p>}
-              <h3>
+              <h3 className="current-timezone">
                 IN <span className="ms-3">{timeZone}</span><span className="ms-3">{}</span>
               </h3>
             </div>

@@ -42,8 +42,26 @@ header {
   flex-direction: column;
   padding: 96px 165px 96px 165px;
 }
+
+.quote {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;  
+}
 .current-description {
   margin-bottom: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.current-timezone {
+font-weight: 700;
+font-size: 24px;
+line-height: 28px;
+letter-spacing: 4.8px;
+text-transform: uppercase;
 }
 .description {
   width: 100%;
@@ -142,11 +160,11 @@ bottom:-800px;
   
 .arrow {
   padding: 8px;
-  transform: rotate(0deg);
+  transform: rotate(180deg);
   transition: transform, 0.3s ease-in-out;
 
 }
  .active {
   padding: 8px;
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
