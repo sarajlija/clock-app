@@ -48,17 +48,15 @@ header {
 .description {
   width: 100%;
   display: flex;
-  position: relative;
-  transform: translateY(40px);
+  bottom: 0;
+  position: absolute;
   transition: all 0.4s ease-in-out;
-  background-color: white;
+  background: rgba(255, 255, 255, 0.75);
   color: black;
 }
-.open-description {
-  transform: translateY(40px);
-}
+
 .close-description {
-  transform: translateY(280px);
+bottom:-800px;
 }
 .description .left-description {
   width: 50%;
@@ -77,13 +75,24 @@ header {
   font-size: 56px;
   font-weight: 700;
 }
-/*.header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: self-end;
-  height: 100%;
-  margin: 2rem 5rem;
-}*/
+
+.left-description p {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 28px;
+  color: #303030;
+  text-transform: uppercase;
+
+}
+.right-description p {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 28px;
+  color: #303030;
+  text-transform: uppercase;
+}
+
+
 .header-title {
   width: 100%;
   display: flex;
@@ -94,7 +103,7 @@ header {
   width: 50%;
   display: flex;
   align-items: flex-start;
-  margin-bottom: 5rem;
+  margin-bottom: 10rem;
 }
 .quote-wrapper {
   font-style: normal;
@@ -131,9 +140,6 @@ header {
     border-radius: 30px;
     }
   
-  
-
-
 .arrow {
   padding: 8px;
   transform: rotate(0deg);

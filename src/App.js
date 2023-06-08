@@ -143,7 +143,7 @@ console.log(countryCode)
             </div>{" "}
           </div>{" "}
         </div>{" "}
-        <div className={`description ${description ? "open-description" : "close-description"}`}>
+        <div className={`description ${description ? null : "close-description"}`}>
           <div className="left-description">
             <p>current time zone</p>
             <h2>{timeZone}</h2>
