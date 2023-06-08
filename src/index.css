@@ -116,6 +116,31 @@ header {
   background-color: transparent;
 }
 .btn-more {
+ 
   display: flex;
   align-items: flex-end;
+
+
+}
+.btn__more {
+   font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 28px;
+    color:rgb(0, 0, 0, 0.5);
+    border-radius: 30px;
+    }
+  
+  
+
+
+.arrow {
+  padding: 8px;
+  transform: rotate(0deg);
+  transition: transform, 0.3s ease-in-out;
+
+}
+ .active {
+  padding: 8px;
+  transform: rotate(180deg);
 }

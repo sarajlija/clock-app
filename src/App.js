@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import useGeolocation from "react-navigator-geolocation"
 import axios from "axios"
 
 function App() {
@@ -23,51 +22,24 @@ function App() {
     setAutor(dataQuote.originator.name)
     try {
       const response = await fetch(url, options)
-      const result = await response.text()
-      console.log(result)
-    } catch (error) {
-      console.error(error)
+      const dataQuote = await response.text()
+      console.log(dataQuote)
+    } catch (err) {
+      setError(err.message)
+      setQuote(null)
+      setAutor(null)
+      console.log(error)
     }
   }
-  /*WORLTIME
 
-  const [currentTime, setCurrentTime] = useState(null)
-  const [timeZone, setTimeZone] = useState(null)
+  /*WORLTIME*/
 
-  const urlTime = "https://world-time2.p.rapidapi.com/ip"
-  const optionsTime = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "02df9e7ffbmshcce54fcdba3ad4bp1c0149jsn5afc4d45cc52",
-      "X-RapidAPI-Host": "world-time2.p.rapidapi.com"
-    }
-  }
-  const fetchTime = async () => {
-    try {
-      const response = await fetch(urlTime, optionsTime)
-      const result = await response.json()
-
-      if (result === undefined) {
-        let arr = result || []
-        arr = await response.json()
-        console.log(arr)
-        setCurrentTime(arr.datetime.slice(11, 16))
-      } else {
-        setCurrentTime(result.datetime.slice(11, 16))
-        console.log(result)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  useEffect(() => {
-    fetchTime()
-  }, [])
-*/
   const [data, setData] = useState(null)
   const [abbreviation, setAbbreviation] = useState()
-
   const [timeZone, setTimeZone] = useState(null)
+  const [dayOfYear, setDayOfYear] = useState(null)
+  const [dayOfWeek, setDayOfWeek] = useState(null)
+  const [weekNumber, setWeekNumber] =useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -75,171 +47,59 @@ function App() {
     const getData = async () => {
       try {
         const response = await axios.get("http://worldtimeapi.org/api/ip")
-
-        console.log(response)
-        /*if (response === undefined) {
-          /* let arr = response || []
-          arr = await response.json()
-          console.log(arr)
-          setData(arr.data.datetime.slice(11, 16))
-          setTimeZone(arr.data.timezone)
-          setAbbreviation(arr.data.abbreviation)
-        } else {*/
+        console.log(response)       
         setData(response.data.datetime.slice(11, 16))
         setTimeZone(response.data.timezone)
         setAbbreviation(response.data.abbreviation)
+        setDayOfYear(response.data.day_of_year)
+        setDayOfWeek(response.data.day_of_week)
+        setWeekNumber(response.data.week_number)
+        setLoading(true)
       } catch (err) {
         setError(err.message)
         setData(null)
+        setTimeZone(null)
+        console.log(error)
       } finally {
         setLoading(false)
       }
     }
     getData()
   }, [loading])
-  //const { datetime } = data
+
   /*GEOLOCATION
-const [locationData, setLocationData] = useState(null)
-const options2 = {
-  method: 'GET',
-  url:"https://api.ipbase.com/v2/",
-  params: {ip: '1.1.1.1'},
-  headers: {
-    'X-RapidAPI-Key': 'oXGf0IdiddMXLD7a9ggFZnS590DNv6znSrOBRmgy',
-    'X-RapidAPI-Host': 'ipbase-ip-geolocation-api.p.rapidapi.com'
-  }
-};
-const fetchGeoData = async () => {
-  const response = await fetch(url, options2)
-  const datalocation = await response.json()
-  console.log(datalocation)
-  setLocationData(datalocation)
- 
+  const [locationData, setLocationData] = useState(null)
+  const [countryCode, setCountryCode] =useState(null)
+  const fetchGeoData = async () => {
+    const response = await axios.get("https://api.ipbase.com/v2/info?apikey=oXGf0IdiddMXLD7a9ggFZnS590DNv6znSrOBRmgy")
   try {
-    const response = await fetch(url, options2)
-    const result = await response.text()
-    console.log(result)
-  } catch (error) {
-    console.error(error)
+    const response = await axios.get("https://api.ipbase.com/v2/info?apikey=oXGf0IdiddMXLD7a9ggFZnS590DNv6znSrOBRmgy")
+    console.log(response)
+   setLocationData(response.data.data.location.city.name)
+   setCountryCode(response.data.data.location.country.alpha3)  
+   
+  } catch (err) {
+    setError(err.message)
+   setLocationData(null)
+   setCountryCode(null)
+  } finally {
+    setLoading(false)
   }
 }
 useEffect(() => {
   fetchGeoData();
 }, []);
-
-
-/*
-useEffect(() => {
-  const fetchLocation = async () => {
-    try {
-      const response = await axios.get("https://api.ipbase.com/v2/");
-
-      setLocationData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  fetchLocation();
-}, []);
-console.log(locationData)*/
-
+console.log(locationData)
+console.log(countryCode)
+*/
   /*HIDE QUOTE*/
   const [description, setDescription] = useState(false)
   const handleClickDescription = () => {
-    setDescription(!description)
+    setDescription(!description)    
   }
   const handleClickQuote = () => {
     fetchData()
   }
-
-  /*useEffect(() => {
-    const getDataAfterTimeOut = setInterval(() => {
-     
-        fetchData()
-    
-    }, 30000)
-    return () => clearInterval(getDataAfterTimeOut)
-  }, [])*/
-
-  /*useEffect(() => {
-    fetchData()
-  }, [])
-  console.log(quote)
-  /*
-  const [location, setLocation] = useState(null)
-  const [weather, setWeather] = useState(null)
-
-  function handleLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error)
-    } else {
-      console.log("Geolocation not supported")
-    }
-  }
-  useEffect(() => {
-    handleLocation()
-  }, [])
-
-  function success(position) {
-    const latitude = position.coords.latitude
-    const longitude = position.coords.longitude
-    setLocation({ latitude, longitude })
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`)
-
-    // Make API call to OpenWeatherMap
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=cb6a13d1a17e74c78d0fac8bacf21fa7`)
-      .then(response => response.json())
-      .then(data => {
-        setWeather(data)
-        console.log(data)
-      })
-      .catch(error => console.log(error))
-  }
-
-  function error() {
-    console.log("Unable to retrieve your location")
-  }
-  console.log(weather)
-  console.log(location)
-  /*
-  useEffect(() => {
- 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-       
-        },
-        (error) => {
-          setError(error.message);
-        }
-      );
-    } else {
-      setError('Geolocation is not supported by this browser.');
-    }   console.log(latitude)
-          console.log(longitude)
-  }, []);
-
-
-  useEffect(() => {
-    
-    if (latitude && longitude) {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=cb6a13d1a17e74c78d0fac8bacf21fa7`
-        )
-        .then((response) => {
-          console.log(response.data); // Handle the response data
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [latitude, longitude]);
-
-*/
 
   return (
     <main>
@@ -272,13 +132,13 @@ console.log(locationData)*/
               )}
               {loading && <p className="fs-3">Loading....</p>}
               <h3>
-                IN <span className="ms-3">{timeZone}</span>
+                IN <span className="ms-3">{timeZone}</span><span className="ms-3">{}</span>
               </h3>
             </div>
             <div className="btn-more">
-              <button className="btn btn-light" onClick={handleClickDescription}>
-                more
-                <img src="/assets/desktop/icon-arrow-up.svg" alt="arrow-down" />
+              <button className="btn__more" onClick={handleClickDescription}>
+                <span className="mx-3">more</span>
+                <img src="/assets/desktop/icon-arrow-up.svg" alt="arrow-down" className={`arrow ${description?"active":""}`}/>
               </button>
             </div>{" "}
           </div>{" "}
@@ -286,16 +146,16 @@ console.log(locationData)*/
         <div className={`description ${description ? "open-description" : "close-description"}`}>
           <div className="left-description">
             <p>current time zone</p>
-            <h2>EUROPE/LONDON</h2>
+            <h2>{timeZone}</h2>
             <p>day of the year</p>
-            <h2>295</h2>
+            <h2>{dayOfYear}</h2>
           </div>
           <div className="right-description">
             {" "}
             <p>day of the week</p>
-            <h2>5</h2>
-            <p> week number</p>
-            <h2>55</h2>
+            <h2>{dayOfWeek}</h2>
+            <p>week number</p>
+            <h2>{weekNumber}</h2>
           </div>
         </div>
       </header>
