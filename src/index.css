@@ -14,7 +14,7 @@ body {
 /*
 section {
 }*/
-.image {
+.image-desktop {
   position: absolute;
   top: 0;
   z-index: -1;
