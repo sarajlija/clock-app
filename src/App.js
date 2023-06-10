@@ -2,33 +2,6 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 function App() {
-  const [quote, setQuote] = useState("The science of operations, as derived from mathematics more especially, is a science of itself, and has its own abstract truth and value.")
-  const [autor, setAutor] = useState("Ada Lovace")
-
-  /*QUOTES*/
-  const url = "https://quotes15.p.rapidapi.com/quotes/random/"
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
-      "X-RapidAPI-Host": "quotes15.p.rapidapi.com"
-    }
-  }
-  const fetchData = async () => {
-    try {
-      const response = await fetch(url, options)
-      const dataQuote = await response.json()
-      console.log(dataQuote)
-      setQuote(dataQuote.content)
-      setAutor(dataQuote.originator.name)
-    } catch (err) {
-      setError(err.message)
-      setQuote(null)
-      setAutor(null)
-      console.log(error)
-    }
-  }
-
   /*WORLTIME*/
 
   const [data, setData] = useState(null)
@@ -51,7 +24,7 @@ function App() {
         console.log(wdata)
         const { timezone, datetime, abbreviation, day_of_year, day_of_week, week_number, client_ip } = wdata
 
-        setData(datetime.slice(11, 16))
+        setData(wdata.datetime.slice(11, 16))
         setDateTimeFull(datetime.slice(0, 10))
         console.log(dateTimeFull)
         setTimeZone(timezone)
@@ -59,7 +32,7 @@ function App() {
         setDayOfYear(day_of_year)
         setDayOfWeek(day_of_week)
         setWeekNumber(week_number)
-        setClientIP(client_ip)
+        setClientIP(wdata.client_ip)
         setLoading(true)
       } catch (err) {
         setError(err.message)
@@ -73,13 +46,6 @@ function App() {
     getData()
   }, [loading])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchData()
-    }, 60000)
-    return () => clearInterval(interval)
-  }, [quote, autor])
-
   /**LOCATION AND TIME */
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
@@ -90,77 +56,70 @@ function App() {
     try {
       const response = await fetch(urlLocation)
       const ldata = await response.json()
-      const { lon, lat } = ldata
       console.log(ldata)
+
       setLatitude(ldata.lat)
       setLongitude(ldata.lon)
-      console.log(latitude)
-      console.log(longitude)
     } catch (error) {
       console.error(error)
     }
   }
-
+  console.log(latitude)
+  console.log(longitude)
   useEffect(() => {
     fetchLocalTime()
-  }, [])
+  }, [latitude, longitude])
 
   /*SUNSET*/
-  /* date: `${dateTimeFull}`,
-      latitude: `${latitude}`,
-      longitude: `${longitude}`,
-      timeZoneId: `${timeZone}`*/
-  const options3 = {
-    method: "GET",
-    url: "https://sunrise-sunset-times.p.rapidapi.com/getSunriseAndSunset",
-    params: {
-      date: "2021-10-31",
-      latitude: "51.5072",
-      longitude: "-0.1276",
-      timeZoneId: "America/New_York"
-    },
-    headers: {
-      "X-RapidAPI-Key": "02df9e7ffbmshcce54fcdba3ad4bp1c0149jsn5afc4d45cc52",
-      "X-RapidAPI-Host": "sunrise-sunset-times.p.rapidapi.com"
-    }
-  }
-  const fetchSunset = async () => {
+  const url3 = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&cnt=5&appid=${process.env.REACT_APP_API_KEY_OPEN_WETHER}`
+  const fetchSun = async () => {
     try {
-      const response = await axios.request(options3)
-      console.log(response.data)
+      const response = await fetch(url3)
+      const result = await response.json()
+      console.log(result)
     } catch (error) {
       console.error(error)
     }
   }
+
   useEffect(() => {
-    fetchSunset()
+    fetchSun()
   }, [])
 
-  /*GEOLOCATION
-  const [locationData, setLocationData] = useState(null)
-  const [countryCode, setCountryCode] =useState(null)
-  const fetchGeoData = async () => {
-    const response = await axios.get("https://api.ipbase.com/v2/info?apikey=oXGf0IdiddMXLD7a9ggFZnS590DNv6znSrOBRmgy")
-  try {
-    const response = await axios.get("https://api.ipbase.com/v2/info?apikey=oXGf0IdiddMXLD7a9ggFZnS590DNv6znSrOBRmgy")
-    console.log(response)
-   setLocationData(response.data.data.location.city.name)
-   setCountryCode(response.data.data.location.country.alpha3)  
-   
-  } catch (err) {
-    setError(err.message)
-   setLocationData(null)
-   setCountryCode(null)
-  } finally {
-    setLoading(false)
+  const [quote, setQuote] = useState("The science of operations, as derived from mathematics more especially, is a science of itself, and has its own abstract truth and value.")
+  const [autor, setAutor] = useState("Ada Lovace")
+
+  /*QUOTES*/
+  const url = "https://quotes15.p.rapidapi.com/quotes/random/"
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
+      "X-RapidAPI-Host": "quotes15.p.rapidapi.com",
+      "X-Rate-Limit": 700,
+      "X-Rate-Limit-Remaining": 699
+    }
   }
-}
-useEffect(() => {
-  fetchGeoData();
-}, []);
-console.log(locationData)
-console.log(countryCode)
-*/
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url, options)
+      const dataQuote = await response.json()
+      console.log(dataQuote)
+      setQuote(dataQuote.content)
+      setAutor(dataQuote.originator.name)
+    } catch (err) {
+      setError(err.message)
+      setQuote(null)
+      setAutor(null)
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchData()
+    }, 60000)
+    return () => clearInterval(interval)
+  }, [quote, autor])
   /*HIDE QUOTE*/
   const [description, setDescription] = useState(false)
   const handleClickDescription = () => {
