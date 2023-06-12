@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
 
 function App() {
   /*WORLTIME*/
 
-  const [data, setData] = useState(null)
+  const [clockDate, setClockDate] = useState(null)
   const [dateTimeFull, setDateTimeFull] = useState(null)
   const [abbreviation, setAbbreviation] = useState()
   const [timeZone, setTimeZone] = useState(null)
@@ -14,19 +13,20 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [clientIP, setClientIP] = useState(null)
-  console.log(clientIP)
+  //console.log(clientIP)
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await fetch("http://worldtimeapi.org/api/ip")
         const wdata = await response.json()
-        console.log(wdata)
+        // console.log(wdata)
         const { timezone, datetime, abbreviation, day_of_year, day_of_week, week_number, client_ip } = wdata
 
-        setData(wdata.datetime.slice(11, 16))
-        setDateTimeFull(datetime.slice(0, 10))
-        console.log(dateTimeFull)
+        setClockDate(wdata.datetime.slice(11, 16))
+        // console.log(clockDate)
+        setDateTimeFull(wdata.datetime.slice(0, 10))
+        // console.log(dateTimeFull)
         setTimeZone(timezone)
         setAbbreviation(abbreviation)
         setDayOfYear(day_of_year)
@@ -36,7 +36,7 @@ function App() {
         setLoading(true)
       } catch (err) {
         setError(err.message)
-        setData(null)
+        setClockDate(null)
         setTimeZone(null)
         console.log(error)
       } finally {
@@ -44,11 +44,11 @@ function App() {
       }
     }
     getData()
-  }, [loading])
+  }, [loading, clientIP, clockDate, timeZone])
 
   /**LOCATION AND TIME */
-  const [latitude, setLatitude] = useState(null)
-  const [longitude, setLongitude] = useState(null)
+  const [localLatitude, setLocalLatitude] = useState(null)
+  const [localLongitude, setLocalLongitude] = useState(null)
 
   const urlLocation = `http://ip-api.com/json/${clientIP}`
 
@@ -56,35 +56,44 @@ function App() {
     try {
       const response = await fetch(urlLocation)
       const ldata = await response.json()
-      console.log(ldata)
+      //  console.log(ldata)
 
-      setLatitude(ldata.lat)
-      setLongitude(ldata.lon)
+      setLocalLatitude(ldata.lat)
+      setLocalLongitude(ldata.lon)
     } catch (error) {
       console.error(error)
     }
   }
-  console.log(latitude)
-  console.log(longitude)
+  // console.log(localLatitude)
+  //console.log(localLongitude)
   useEffect(() => {
     fetchLocalTime()
-  }, [latitude, longitude])
+  }, [localLatitude, localLongitude])
 
   /*SUNSET*/
-  const url3 = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&cnt=5&appid=${process.env.REACT_APP_API_KEY_OPEN_WETHER}`
+  const [sunsetQuery, setSunsetQuery] = useState()
+  const [sunriseQuery, setSunriseQuery] = useState()
+  const [cityName, setCityName] = useState(null)
+  const [countryCode, setCountryCode] = useState(null)
+  const url3 = `https://api.openweathermap.org/data/2.5/weather?lat=${localLatitude}&lon=${localLongitude}&cnt=15&appid=${process.env.REACT_APP_API_KEY_OPEN_WETHER}`
   const fetchSun = async () => {
     try {
       const response = await fetch(url3)
       const result = await response.json()
       console.log(result)
+      setSunriseQuery(result.sys.sunrise)
+      setSunsetQuery(result.sys.sunset)
+      setCityName(result.name)
+      setCountryCode(result.sys.country)
     } catch (error) {
       console.error(error)
     }
   }
-
+  console.log(sunsetQuery)
+  console.log(sunriseQuery)
   useEffect(() => {
     fetchSun()
-  }, [])
+  }, [url3, sunsetQuery, sunriseQuery, cityName, countryCode])
 
   const [quote, setQuote] = useState("The science of operations, as derived from mathematics more especially, is a science of itself, and has its own abstract truth and value.")
   const [autor, setAutor] = useState("Ada Lovace")
@@ -104,7 +113,7 @@ function App() {
     try {
       const response = await fetch(url, options)
       const dataQuote = await response.json()
-      console.log(dataQuote)
+      // console.log(dataQuote)
       setQuote(dataQuote.content)
       setAutor(dataQuote.originator.name)
     } catch (err) {
@@ -128,7 +137,32 @@ function App() {
   const handleClickQuote = () => {
     fetchData()
   }
+  /*CHECK_DAYLIGHT*/
 
+  const [isDaytime, setIsDaytime] = useState(null)
+
+  useEffect(() => {
+    const checkDaylight = () => {
+      const now = Math.floor(new Date().getTime() / 1000)
+      console.log(now)
+      //const sunrise = getSunriseTime() // Replace with your own function to get the sunrise time
+      //const sunset = getSunsetTime() // Replace with your own function to get the sunset time
+
+      if (now > sunriseQuery && now < sunsetQuery) {
+        setIsDaytime(false)
+      } else {
+        setIsDaytime(true)
+      }
+    }
+
+    checkDaylight()
+    const interval = setInterval(checkDaylight, 60000) // Update every minute
+
+    return () => {
+      clearInterval(interval) // Clean up the interval on component unmount
+    }
+  }, [isDaytime])
+  console.log(isDaytime)
   return (
     <main>
       <header>
@@ -147,21 +181,19 @@ function App() {
           <div className="header-title">
             <div className="current">
               <p className="current-description">
-                <span className="me-2">
-                  <img src="/assets/desktop/icon-sun.svg" alt="sun" />
-                </span>
+                <span className="me-2">{isDaytime ? <img src="/assets/desktop/icon-sun.svg" alt="sun" /> : <img src="/assets/desktop/icon-moon.svg" alt="moon" />}</span>
                 GOOD MORNING, IT’S CURRENTLY
               </p>
               {!loading && (
                 <h1 className="current-time">
-                  {data}
+                  {clockDate}
                   <span className="span-bst">{abbreviation}</span>
                 </h1>
               )}
               {loading && <p className="fs-3">Loading....</p>}
               <h3 className="current-timezone">
-                IN <span className="ms-3">{timeZone}</span>
-                <span className="ms-3">{}</span>
+                IN <span className="ms-3">{cityName},</span>
+                <span className="ms-3">{countryCode}</span>
               </h3>
             </div>
             <div className="btn-more">
@@ -188,9 +220,9 @@ function App() {
           </div>
         </div>
       </header>
-      <div>
-        <img src="/assets/desktop/bg-image-daytime.jpg" alt="background" className="image-desktop" />
-      </div>
+
+      {isDaytime ? <img src="/assets/desktop/bg-image-daytime.jpg" alt="background" className="image-desktop" /> : <img src="/assets/desktop/bg-image-nighttime.jpg" alt="background" className="image-desktop" />}
+      {isDaytime ? <img src="/assets/tablet/bg-image-daytime.jpg" alt="background" className="image-tablet" /> : <img src="/assets/tablet/bg-image-nighttime.jpg" alt="background" className="image-tablet" />}
     </main>
   )
 }

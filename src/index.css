@@ -24,6 +24,9 @@ section {
   width: 100%;
   filter: brightness(0.6);
 }
+.image-tablet {
+  display: none;
+}
 main {
   position: relative;
   height: 100vh;
@@ -46,7 +49,7 @@ header {
 .quote {
   font-weight: 400;
   font-size: 18px;
-  line-height: 28px;  
+  line-height: 28px;
 }
 .current-description {
   margin-bottom: 0;
@@ -57,11 +60,11 @@ header {
   text-transform: uppercase;
 }
 .current-timezone {
-font-weight: 700;
-font-size: 24px;
-line-height: 28px;
-letter-spacing: 4.8px;
-text-transform: uppercase;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 4.8px;
+  text-transform: uppercase;
 }
 .description {
   width: 100%;
@@ -74,7 +77,7 @@ text-transform: uppercase;
 }
 
 .close-description {
-bottom:-800px;
+  bottom: -800px;
 }
 .description .left-description {
   width: 50%;
@@ -100,7 +103,6 @@ bottom:-800px;
   line-height: 28px;
   color: #303030;
   text-transform: uppercase;
-
 }
 .right-description p {
   font-weight: 400;
@@ -109,7 +111,6 @@ bottom:-800px;
   color: #303030;
   text-transform: uppercase;
 }
-
 
 .header-title {
   width: 100%;
@@ -143,28 +144,39 @@ bottom:-800px;
   background-color: transparent;
 }
 .btn-more {
- 
   display: flex;
   align-items: flex-end;
-
-
 }
 .btn__more {
-   font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    line-height: 28px;
-    color:rgb(0, 0, 0, 0.5);
-    border-radius: 30px;
-    }
-  
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 28px;
+  color: rgb(0, 0, 0, 0.5);
+  border-radius: 30px;
+}
+
 .arrow {
   padding: 8px;
   transform: rotate(180deg);
   transition: transform, 0.3s ease-in-out;
-
 }
- .active {
+.active {
   padding: 8px;
   transform: rotate(0deg);
+}
+@media (max-width: 768px) {
+  .image-desktop {
+    display: none;
+  }
+  .image-tablet {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    max-width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    width: 100%;
+    filter: brightness(0.6);
+  }
 }
