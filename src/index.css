@@ -28,6 +28,9 @@ section {
 .image-tablet {
   display: none;
 }
+.image-mobile {
+  display: none;
+}
 main {
   position: relative;
   height: 100vh;
@@ -202,6 +205,9 @@ header {
   .image-desktop {
     display: none;
   }
+  .image-mobile {
+    display: none;
+  }
   .image-tablet {
     display: block;
     position: absolute;
@@ -230,6 +236,33 @@ header {
 }
 
 @media (max-width: 576px) {
+  .image-mobile {
+    position: absolute;
+    display: block;
+    top: 0;
+    z-index: -1;
+    max-width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    width: 100%;
+    filter: brightness(0.6);
+  }
+  .image-tablet {
+    display: none;
+  }
+  .header-title h1 {
+    font-size: 100px;
+  }
+  .span-bst {
+    font-size: 15px;
+    font-weight: 300;
+  }
+  .current-timezone {
+    font-size: 15px;
+  }
+  .current-description {
+    font-size: 15px;
+  }
   .description {
     flex-direction: column;
     padding: 48px 26px;

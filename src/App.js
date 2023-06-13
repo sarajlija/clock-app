@@ -145,8 +145,6 @@ function App() {
     const checkDaylight = () => {
       const now = Math.floor(new Date().getTime() / 1000)
       console.log(now)
-      //const sunrise = getSunriseTime() // Replace with your own function to get the sunrise time
-      //const sunset = getSunsetTime() // Replace with your own function to get the sunset time
 
       if (now > sunriseQuery && now < sunsetQuery) {
         setIsDaytime(false)
@@ -182,7 +180,7 @@ function App() {
             <div className="current">
               <p className="current-description">
                 <span className="me-2">{isDaytime ? <img src="/assets/desktop/icon-sun.svg" alt="sun" /> : <img src="/assets/desktop/icon-moon.svg" alt="moon" />}</span>
-                GOOD MORNING, IT’S CURRENTLY
+                {isDaytime ? <span>GOOD MORNING, IT’S CURRENTLY</span> : <span>GOOD EVENING</span>}
               </p>
               {!loading && (
                 <h1 className="current-time">
@@ -232,6 +230,7 @@ function App() {
 
       {isDaytime ? <img src="/assets/desktop/bg-image-daytime.jpg" alt="background" className="image-desktop" /> : <img src="/assets/desktop/bg-image-nighttime.jpg" alt="background" className="image-desktop" />}
       {isDaytime ? <img src="/assets/tablet/bg-image-daytime.jpg" alt="background" className="image-tablet" /> : <img src="/assets/tablet/bg-image-nighttime.jpg" alt="background" className="image-tablet" />}
+      {isDaytime ? <img src="/assets/mobile/bg-image-daytime.jpg" alt="background" className="image-mobile" /> : <img src="/assets/mobile/bg-image-nighttime.jpg" alt="background" className="image-mobile" />}
     </main>
   )
 }
