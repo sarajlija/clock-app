@@ -16,6 +16,7 @@ section {
 }*/
 .image-desktop {
   position: absolute;
+  display: block;
   top: 0;
   z-index: -1;
   max-width: 100%;
@@ -43,13 +44,17 @@ header {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  padding: 96px 165px 96px 165px;
+  padding: 96px 165px;
 }
 
 .quote {
   font-weight: 400;
   font-size: 18px;
   line-height: 28px;
+}
+.autor {
+  font-weight: 700;
+  font-size: 18px;
 }
 .current-description {
   margin-bottom: 0;
@@ -69,6 +74,7 @@ header {
 .description {
   width: 100%;
   display: flex;
+  padding: 59px 64px;
   bottom: 0;
   position: absolute;
   transition: all 0.4s ease-in-out;
@@ -80,12 +86,10 @@ header {
   bottom: -800px;
 }
 .description .left-description {
-  width: 50%;
-  padding: 57px 165px;
+  width: 100%;
 }
 .description .right-description {
-  width: 50%;
-  padding: 57px 94px;
+  width: 100%;
 }
 
 .right-description h2 {
@@ -165,11 +169,41 @@ header {
   padding: 8px;
   transform: rotate(0deg);
 }
+@media (max-width: 1150px) {
+  .header-title {
+    row-gap: 3rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-title h1 {
+    font-size: 175px;
+  }
+  .span-bst {
+    font-size: 32px;
+  }
+
+  .left-description h2 {
+    font-size: 40px;
+  }
+  .right-description h2 {
+    font-size: 40px;
+  }
+  .time-zone {
+    max-width: 100%;
+  }
+  .left-description p {
+    font-size: 13px;
+  }
+  .right-description p {
+    font-size: 13px;
+  }
+}
 @media (max-width: 768px) {
   .image-desktop {
     display: none;
   }
   .image-tablet {
+    display: block;
     position: absolute;
     top: 0;
     z-index: -1;
@@ -178,5 +212,85 @@ header {
     object-fit: cover;
     width: 100%;
     filter: brightness(0.6);
+  }
+  .header-title h1 {
+    font-size: 175px;
+  }
+  .header-quote {
+    width: 100%;
+  }
+
+  .wrapper-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 64px 80px 131px 64px;
+  }
+}
+
+@media (max-width: 576px) {
+  .description {
+    flex-direction: column;
+    padding: 48px 26px;
+  }
+  .description .left-description {
+    width: 100%;
+    display: block;
+  }
+  .time-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .time-zone h2 {
+    font-size: 20px;
+  }
+  .time-zone p {
+    font-size: 10px;
+  }
+  .day-of-year {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .day-of-year h2 {
+    font-size: 20px;
+  }
+  .day-of-year p {
+    font-size: 10px;
+  }
+
+  .description .right-description {
+    width: 100%;
+    display: block;
+  }
+  .day-of-week {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .day-of-week p {
+    font-size: 10px;
+  }
+  .day-of-week h2 {
+    font-size: 20px;
+  }
+  .day-of-year h2 {
+    font-size: 20px;
+  }
+  .day-of-year p {
+    font-size: 10px;
+  }
+  .week-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .week-number h2 {
+    font-size: 20px;
+  }
+  .week-number p {
+    font-size: 10px;
   }
 }

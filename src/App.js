@@ -93,7 +93,7 @@ function App() {
   console.log(sunriseQuery)
   useEffect(() => {
     fetchSun()
-  }, [url3, sunsetQuery, sunriseQuery, cityName, countryCode])
+  }, [url3])
 
   const [quote, setQuote] = useState("The science of operations, as derived from mathematics more especially, is a science of itself, and has its own abstract truth and value.")
   const [autor, setAutor] = useState("Ada Lovace")
@@ -171,7 +171,7 @@ function App() {
             <div className="header-quote">
               <div className="quote-wrapper">
                 <p className="quote">"{quote}"</p>
-                <small>{autor}</small>
+                <p className="autor">{autor}</p>
               </div>
               <button className="btn-refresh" onClick={handleClickQuote}>
                 <img src="/assets/desktop/icon-refresh.svg" alt="refresh" />
@@ -198,7 +198,7 @@ function App() {
             </div>
             <div className="btn-more">
               <button className="btn__more" onClick={handleClickDescription}>
-                <span className="mx-3">more</span>
+                {!description ? <span className="mx-2">more</span> : <span className="mx-2">less</span>}
                 <img src="/assets/desktop/icon-arrow-up.svg" alt="arrow-down" className={`arrow ${description ? "active" : ""}`} />
               </button>
             </div>{" "}
@@ -206,17 +206,26 @@ function App() {
         </div>{" "}
         <div className={`description ${description ? null : "close-description"}`}>
           <div className="left-description">
-            <p>current time zone</p>
-            <h2>{timeZone}</h2>
-            <p>day of the year</p>
-            <h2>{dayOfYear}</h2>
+            <div className="time-zone">
+              <p>current time zone</p>
+              <h2>{timeZone}</h2>
+            </div>
+            <div className="day-of-year">
+              <p>day of the year</p>
+              <h2>{dayOfYear}</h2>
+            </div>
           </div>
           <div className="right-description">
-            {" "}
-            <p>day of the week</p>
-            <h2>{dayOfWeek}</h2>
-            <p>week number</p>
-            <h2>{weekNumber}</h2>
+            <div className="day-of-week">
+              {" "}
+              <p>day of the week</p>
+              <h2>{dayOfWeek}</h2>
+            </div>
+            <div className="week-number">
+              {" "}
+              <p>week number</p>
+              <h2>{weekNumber}</h2>
+            </div>
           </div>
         </div>
       </header>
