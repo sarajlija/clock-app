@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("https://worldtimeapi.org/api/ip")
+        const response = await fetch("http://worldtimeapi.org/api/ip")
         const wdata = await response.json()
         // console.log(wdata)
         const { timezone, datetime, abbreviation, day_of_year, day_of_week, week_number, client_ip } = wdata
