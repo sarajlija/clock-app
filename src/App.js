@@ -49,13 +49,17 @@ function App() {
   /**LOCATION AND TIME */
   const [localLatitude, setLocalLatitude] = useState(null)
   const [localLongitude, setLocalLongitude] = useState(null)
+  const urlLocation = `https://api.geoapify.com/v1/ipinfo?&apiKey=${process.env.REACT_APP_API_KEY_GEO_APFI}`
+  let requestOptions = {
+    method: "GET"
+  }
 
   //const urlLocation = `https://api.ipgeolocationapi.com/geolocate/${clientIP}`
   //const urlLocation = `https://api.ipgeolocationapi.com/${clientIP}`
-  const urlLocation = `https://api.geoapify.com/v1/ipinfo?apiKey=${process.env.REACT_APP_API_KEY_GEO_APFI}`
+  //const urlLocation = `https://api.geoapify.com/v1/ipinfo?apiKey=${process.env.REACT_APP_API_KEY_GEO_APFI}`
   const fetchLocalTime = async () => {
     try {
-      const response = await fetch(urlLocation)
+      const response = await fetch(urlLocation, requestOptions)
       const ldata = await response.json()
 
       console.log(ldata)
