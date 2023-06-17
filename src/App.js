@@ -54,9 +54,6 @@ function App() {
     method: "GET"
   }
 
-  //const urlLocation = `https://api.ipgeolocationapi.com/geolocate/${clientIP}`
-  //const urlLocation = `https://api.ipgeolocationapi.com/${clientIP}`
-  //const urlLocation = `https://api.geoapify.com/v1/ipinfo?apiKey=${process.env.REACT_APP_API_KEY_GEO_APFI}`
   const fetchLocalTime = async () => {
     try {
       const response = await fetch(urlLocation, requestOptions)
@@ -70,8 +67,7 @@ function App() {
       console.error(error)
     }
   }
-  // console.log(localLatitude)
-  //console.log(localLongitude)
+
   useEffect(() => {
     fetchLocalTime()
   }, [localLatitude, localLongitude])
@@ -119,7 +115,7 @@ function App() {
     try {
       const response = await fetch(url, options)
       const dataQuote = await response.json()
-      // console.log(dataQuote)
+
       setQuote(dataQuote.content)
       setAutor(dataQuote.originator.name)
     } catch (err) {
