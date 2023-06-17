@@ -20,7 +20,7 @@ function App() {
       try {
         const response = await fetch("https://worldtimeapi.org/api/ip")
         const wdata = await response.json()
-        // console.log(wdata)
+        console.log(wdata)
         const { timezone, datetime, abbreviation, day_of_year, day_of_week, week_number, client_ip } = wdata
 
         setClockDate(wdata.datetime.slice(11, 16))
@@ -50,16 +50,18 @@ function App() {
   const [localLatitude, setLocalLatitude] = useState(null)
   const [localLongitude, setLocalLongitude] = useState(null)
 
-  const urlLocation = `http://ip-api.com/json/${clientIP}`
-
+  //const urlLocation = `https://api.ipgeolocationapi.com/geolocate/${clientIP}`
+  //const urlLocation = `https://api.ipgeolocationapi.com/${clientIP}`
+  const urlLocation = `https://api.geoapify.com/v1/ipinfo?apiKey=${process.env.REACT_APP_API_KEY_GEO_APFI}`
   const fetchLocalTime = async () => {
     try {
       const response = await fetch(urlLocation)
       const ldata = await response.json()
-      //  console.log(ldata)
 
-      setLocalLatitude(ldata.lat)
-      setLocalLongitude(ldata.lon)
+      console.log(ldata)
+
+      setLocalLatitude(ldata.location.latitude)
+      setLocalLongitude(ldata.location.longitude)
     } catch (error) {
       console.error(error)
     }
