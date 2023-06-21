@@ -141,7 +141,7 @@ function App() {
   }
   /*CHECK_DAYLIGHT*/
 
-  const [isDaytime, setIsDaytime] = useState(null)
+  const [isDaytime, setIsDaytime] = useState(true)
 
   useEffect(() => {
     const checkDaylight = () => {
@@ -151,9 +151,9 @@ function App() {
       console.log(unixTimestamp)
 
       if (unixTimestamp > sunriseQuery && unixTimestamp < sunsetQuery) {
-        setIsDaytime(true)
-      } else {
         setIsDaytime(false)
+      } else {
+        setIsDaytime(true)
       }
     }
 
