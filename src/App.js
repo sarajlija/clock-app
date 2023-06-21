@@ -163,7 +163,7 @@ function App() {
     return () => {
       clearInterval(interval) // Clean up the interval on component unmount
     }
-  }, [isDaytime])
+  }, [])
   console.log(isDaytime)
   return (
     <main>
