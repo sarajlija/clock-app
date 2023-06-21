@@ -145,13 +145,15 @@ function App() {
 
   useEffect(() => {
     const checkDaylight = () => {
-      const now = Math.floor(new Date().getTime() / 1000)
-      console.log(now)
+      const date = new Date()
+      console.log(date)
+      const unixTimestamp = Math.floor(date.getTime() / 1000)
+      console.log(unixTimestamp)
 
-      if (now > sunriseQuery && now < sunsetQuery) {
-        setIsDaytime(false)
-      } else {
+      if (unixTimestamp > sunriseQuery && unixTimestamp < sunsetQuery) {
         setIsDaytime(true)
+      } else {
+        setIsDaytime(false)
       }
     }
 
