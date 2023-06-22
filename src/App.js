@@ -152,19 +152,23 @@ function App() {
 
       if (unixTimestamp > sunriseQuery && unixTimestamp < sunsetQuery) {
         setIsDaytime(true)
+        console.log(isDaytime)
       } else {
         setIsDaytime(false)
+        console.log(isDaytime)
       }
     }
 
     checkDaylight()
-    const interval = setInterval(checkDaylight, 60000) // Update every minute
+    {
+      /* const interval = setInterval(checkDaylight, 60000) // Update every minute
 
     return () => {
       clearInterval(interval) // Clean up the interval on component unmount
+    }*/
     }
-  }, [])
-  console.log(isDaytime)
+  }, [isDaytime])
+
   return (
     <main>
       <header>
@@ -231,7 +235,6 @@ function App() {
           </div>
         </div>
       </header>
-
       {isDaytime ? <img src="/assets/desktop/bg-image-daytime.jpg" alt="background" className="image-desktop" /> : <img src="/assets/desktop/bg-image-nighttime.jpg" alt="background" className="image-desktop" />}
       {isDaytime ? <img src="/assets/tablet/bg-image-daytime.jpg" alt="background" className="image-tablet" /> : <img src="/assets/tablet/bg-image-nighttime.jpg" alt="background" className="image-tablet" />}
       {isDaytime ? <img src="/assets/mobile/bg-image-daytime.jpg" alt="background" className="image-mobile" /> : <img src="/assets/mobile/bg-image-nighttime.jpg" alt="background" className="image-mobile" />}
