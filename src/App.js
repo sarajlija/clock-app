@@ -160,12 +160,11 @@ function App() {
     }
 
     checkDaylight()
-    {
-      /* const interval = setInterval(checkDaylight, 60000) // Update every minute
+
+    const interval = setInterval(checkDaylight, 60000) // Update every minute
 
     return () => {
       clearInterval(interval) // Clean up the interval on component unmount
-    }*/
     }
   }, [isDaytime])
 
