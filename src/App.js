@@ -141,7 +141,7 @@ function App() {
   }
   /*CHECK_DAYLIGHT*/
 
-  const [isDaytime, setIsDaytime] = useState(null)
+  const [isDaytime, setIsDaytime] = useState(true)
 
   useEffect(() => {
     const checkDaylight = () => {
@@ -151,10 +151,10 @@ function App() {
       console.log(unixTimestamp)
 
       if (unixTimestamp > sunriseQuery && unixTimestamp < sunsetQuery) {
-        setIsDaytime(true)
+        setIsDaytime(false)
         console.log(isDaytime)
       } else {
-        setIsDaytime(false)
+        setIsDaytime(true)
         console.log(isDaytime)
       }
     }
@@ -234,9 +234,9 @@ function App() {
           </div>
         </div>
       </header>
-      {!isDaytime ? <img src="/assets/desktop/bg-image-daytime.jpg" alt="background" className="image-desktop" /> : <img src="/assets/desktop/bg-image-nighttime.jpg" alt="background" className="image-desktop" />}
-      {!isDaytime ? <img src="/assets/tablet/bg-image-daytime.jpg" alt="background" className="image-tablet" /> : <img src="/assets/tablet/bg-image-nighttime.jpg" alt="background" className="image-tablet" />}
-      {!isDaytime ? <img src="/assets/mobile/bg-image-daytime.jpg" alt="background" className="image-mobile" /> : <img src="/assets/mobile/bg-image-nighttime.jpg" alt="background" className="image-mobile" />}
+      {isDaytime ? <img src="/assets/desktop/bg-image-daytime.jpg" alt="background" className="image-desktop" /> : <img src="/assets/desktop/bg-image-nighttime.jpg" alt="background" className="image-desktop" />}
+      {isDaytime ? <img src="/assets/tablet/bg-image-daytime.jpg" alt="background" className="image-tablet" /> : <img src="/assets/tablet/bg-image-nighttime.jpg" alt="background" className="image-tablet" />}
+      {isDaytime ? <img src="/assets/mobile/bg-image-daytime.jpg" alt="background" className="image-mobile" /> : <img src="/assets/mobile/bg-image-nighttime.jpg" alt="background" className="image-mobile" />}
     </main>
   )
 }
