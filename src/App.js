@@ -83,8 +83,8 @@ function App() {
       const response = await fetch(url3)
       const result = await response.json()
       console.log(result)
-      setSunriseQuery(result.sys.sunrise)
-      setSunsetQuery(result.sys.sunset)
+      setSunriseQuery(new Date(result.sys.sunrise * 1000))
+      setSunsetQuery(new Date(result.sys.sunset * 1000))
       setCityName(result.name)
       setCountryCode(result.sys.country)
     } catch (error) {
@@ -141,20 +141,19 @@ function App() {
   }
   /*CHECK_DAYLIGHT*/
 
-  const [isDaytime, setIsDaytime] = useState(true)
+  const [isDaytime, setIsDaytime] = useState(null)
 
   useEffect(() => {
     const checkDaylight = () => {
       const date = new Date()
       console.log(date)
-      const unixTimestamp = Math.floor(date.getTime() / 1000)
-      console.log(unixTimestamp)
+      /* const unixTimestamp = Math.floor(date.getTime() / 1000)*/
 
-      if (unixTimestamp > sunriseQuery && unixTimestamp < sunsetQuery) {
-        setIsDaytime(false)
+      if (date > sunriseQuery && date < sunsetQuery) {
+        setIsDaytime(true)
         console.log(isDaytime)
       } else {
-        setIsDaytime(true)
+        setIsDaytime(false)
         console.log(isDaytime)
       }
     }
