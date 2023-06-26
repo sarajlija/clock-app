@@ -73,8 +73,8 @@ function App() {
   }, [localLatitude, localLongitude])
 
   /*SUNSET*/
-  const [sunsetQuery, setSunsetQuery] = useState()
-  const [sunriseQuery, setSunriseQuery] = useState()
+  const [sunsetQuery, setSunsetQuery] = useState(null)
+  const [sunriseQuery, setSunriseQuery] = useState(null)
   const [cityName, setCityName] = useState(null)
   const [countryCode, setCountryCode] = useState(null)
   const url3 = `https://api.openweathermap.org/data/2.5/weather?lat=${localLatitude}&lon=${localLongitude}&cnt=15&appid=${process.env.REACT_APP_API_KEY_OPEN_WETHER}`
@@ -83,8 +83,8 @@ function App() {
       const response = await fetch(url3)
       const result = await response.json()
       console.log(result)
-      setSunriseQuery(new Date(result.sys.sunrise * 1000))
-      setSunsetQuery(new Date(result.sys.sunset * 1000))
+      setSunriseQuery(new Date(result.sys.sunrise * 1000).getTime())
+      setSunsetQuery(new Date(result.sys.sunset * 1000).getTime())
       setCityName(result.name)
       setCountryCode(result.sys.country)
     } catch (error) {
@@ -146,10 +146,10 @@ function App() {
   useEffect(() => {
     const checkDaylight = () => {
       const date = new Date()
-      console.log(date)
+      console.log(date.getTime())
       /* const unixTimestamp = Math.floor(date.getTime() / 1000)*/
 
-      if (date > sunriseQuery && date < sunsetQuery) {
+      if (sunriseQuery < date < sunsetQuery) {
         setIsDaytime(true)
         console.log(isDaytime)
       } else {
@@ -159,13 +159,13 @@ function App() {
     }
 
     checkDaylight()
-
+    /*
     const interval = setInterval(checkDaylight, 60000) // Update every minute
 
     return () => {
       clearInterval(interval) // Clean up the interval on component unmount
-    }
-  }, [isDaytime])
+    }*/
+  }, [])
 
   return (
     <main>
