@@ -149,7 +149,7 @@ function App() {
       console.log(date.getTime())
       /* const unixTimestamp = Math.floor(date.getTime() / 1000)*/
 
-      if (sunriseQuery < date < sunsetQuery) {
+      if (date >sunriseQuery &&  date < sunsetQuery) {
         setIsDaytime(true)
         console.log(isDaytime)
       } else {
